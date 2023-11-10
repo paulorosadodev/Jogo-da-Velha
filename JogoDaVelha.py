@@ -19,20 +19,23 @@ def registrarJogada(jogada):
                 if int(jogadaO[0]) == i+1 and int(jogadaO[1]) == j+1:
                     matriz[i][j] = 'O'
 
+def analiseColuna(coluna, jogada):
+    colunas = []
+    for i in range(3):
+        colunas.append(matriz[i][coluna])
+    if colunas.count(jogada) == 3:
+        print()
+        print(f'{jogada} venceu!')
+        return 'end'
+
+
 def analisarJogo(matriz, jogada):
     for i in range(3):
         for j in range(3):
-            
             if jogada == jogadaX: 
-                for z in range(3):
-                    coluna = []
-                    if matriz[i][z] not in coluna: 
-                        coluna.append(matriz[i][z])
-                    if coluna.count('X') == 3:
-                        print()
-                        print(f"X venceu!")
-                        return 'end'
-                if matriz[i].count('X') == 3: #Linha
+                if analiseColuna(j, 'X') == 'end':
+                    return 'end'
+                elif matriz[i].count('X') == 3: #Linha
                     print()
                     print(f"X venceu!")
                     return 'end' 
