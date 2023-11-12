@@ -1,44 +1,31 @@
 import os
 os.system('cls')
 
-matriz = [['.', '.', '.'], ['.', '.', '.'], ['.', '.', '.']]
+matriz = [['⬜️', '⬜️', '⬜️'], ['⬜️', '⬜️', '⬜️'], ['⬜️', '⬜️', '⬜️']]
 
-def registrarJogada(jogada, matriz):
-    try:
-        for i in range(3):
-            for j in range(3):
-                if jogada == jogadaX:
-                    if int(jogadaX[0]) == i+1 and int(jogadaX[1]) == j+1:
-                        if matriz[i][j] == '.':
-                            matriz[i][j] = 'X'
-                            return True
-                    else: 
-                        print('JOGADA INVÁLIDA')
-                        print()
-                        return False
-                elif jogada == jogadaO:
-                    if int(jogadaO[0]) == i+1 and int(jogadaO[1]) == j+1:
-                        if matriz[i][j] == '.':
-                            matriz[i][j] = 'O'
-                            return True
-                    else: 
-                        print('JOGADA INVÁLIDA')
-                        print()
-                        return False
-    except:
-        print('DIGITE UM VALOR VÁLIDO')
-        print()
-        return False
+def registrarJogada(jogada):
+    for i in range(3):
+        for j in range(3):
+            if jogada == jogadaX:
+                if int(jogadaX[0]) == i+1 and int(jogadaX[1]) == j+1:
+                    if matriz[i][j] == '⬜️':
+                        matriz[i][j] = '❌'
+                        return True
+            elif jogada == jogadaO:
+                if int(jogadaO[0]) == i+1 and int(jogadaO[1]) == j+1:
+                    if matriz[i][j] == '⬜️':
+                        matriz[i][j] = '⭕️'
+                        return True
 
 def printarMatriz(matriz):
     for i in range(3):
         for j in range(3):
-            print(f"{matriz[i][j]}", end = " ")
+            print(f"{matriz[i][j]}", end = "")
         print()
 
 def analiseLinha(linha, jogada):
     if matriz[linha].count(jogada) == 3:
-        print()
+        print('🎉🎉🎉🎉🎉')
         print(f"{jogada} venceu!")
         return True
 
@@ -47,10 +34,10 @@ def analiseColuna(coluna, jogada):
     for i in range(3):
         colunas.append(matriz[i][coluna])
     if colunas.count(jogada) == 3:
-        print()
+        print('🎉🎉🎉🎉🎉')
         print(f'{jogada} venceu!')
         return True
-    
+
 
 def analiseDiagonal1(matriz, jogada):
     diagonal = []
@@ -59,7 +46,7 @@ def analiseDiagonal1(matriz, jogada):
             if i == j:
                 diagonal.append(matriz[i][j])
     if diagonal.count(jogada) == 3:
-        print()
+        print('🎉🎉🎉🎉🎉')
         print(f'{jogada} venceu!')
         return True
     
@@ -71,65 +58,81 @@ def analiseDiagonal2(matriz, jogada):
     diagonal.append(matriz[0][2])
     if diagonal.count(jogada) == 3:
         print()
+        print('🎉🎉🎉🎉🎉')
+        print()
         print(f'{jogada} venceu!')
         return True
-    
 
 def analisarJogo(matriz, jogada):
     for i in range(3):
         for j in range(3):
             if jogada == jogadaX: 
-                if analiseColuna(j, 'X') == True:
+                if analiseColuna(j, '❌') == True:
                     return True
-                elif analiseLinha(i, 'X') == True: 
+                elif analiseLinha(i, '❌') == True: 
                     return True
-                elif analiseDiagonal1(matriz, 'X') == True:
+                elif analiseDiagonal1(matriz, '❌') == True:
                     return True
-                elif analiseDiagonal2(matriz, 'X') == True:
+                elif analiseDiagonal2(matriz, '❌') == True:
                     return True
                 else:
                     return False
             elif jogada == jogadaO:
-                if analiseColuna(j, 'O') == True:
+                if analiseColuna(j, '⭕️') == True:
                     return True
-                elif analiseLinha(i, 'O') == True: 
+                elif analiseLinha(i, '⭕️') == True: 
                     return True
-                elif analiseDiagonal1(matriz, 'O') == True:
+                elif analiseDiagonal1(matriz, '⭕️') == True:
                     return True
-                elif analiseDiagonal2(matriz, 'O') == True:
+                elif analiseDiagonal2(matriz, '⭕️') == True:
                     return True
                 else:
                     return False
 
 rodada = 0
-começou = 0
 
 while True:
-    if começou == 0:
+    if rodada == 0:
         print()
     
-    jogadaX = input("Digite respectivamente a linha (l) e a coluna (c) em que deseja jogar 'X' no formato [lc]: ").upper()
-    print()
-    if registrarJogada(jogadaX, matriz) == True:
-        printarMatriz(matriz)
-        print()
-        rodada += 1
-    começou += 1
+    while True:
+        try:
+            jogadaX = input("Digite respectivamente a linha (l) e a coluna (c) em que deseja jogar '❌' no formato [lc]: ")
+            print()
+            if registrarJogada(jogadaX) == True:
+                printarMatriz(matriz)
+                print()
+                rodada += 1
+                break
+            else:
+                print('⚠️  JOGADA INVÁLIDA')
+                print()
+        except:
+            print('⚠️  JOGADA INVÁLIDA')
+            print()
 
     if rodada >= 5:
         if analisarJogo(matriz, jogadaX) == True:
             break
     if rodada == 9 and analisarJogo(matriz, jogadaX) == False:
-        print()
         print('Empate!')
         break
 
-    jogadaO = input("Digite respectivamente a linha (l) e a coluna (c) em que deseja jogar 'O' no formato [lc]: ").upper()
-    print()
-    if registrarJogada(jogadaO, matriz) == True:
-        printarMatriz(matriz)
-        rodada += 1
-    começou += 1
+    while True:
+        try:
+            jogadaO = input("Digite respectivamente a linha (l) e a coluna (c) em que deseja jogar '⭕️' no formato [lc]: ")
+            print()
+            if registrarJogada(jogadaO) == True:
+                printarMatriz(matriz)
+                print()
+                rodada += 1
+                break
+            else:
+                print('⚠️  JOGADA INVÁLIDA')
+                print()
+        except:
+            print('⚠️  JOGADA INVÁLIDA')
+            print()
 
     if rodada >= 5:
         if analisarJogo(matriz, jogadaO) == True:
