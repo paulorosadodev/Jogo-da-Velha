@@ -75,8 +75,6 @@ def analisarJogo(matriz, jogada):
                     return True
                 elif analiseDiagonal2(matriz, '❌') == True:
                     return True
-                else:
-                    return False
             elif jogada == jogadaO:
                 if analiseColuna(j, '⭕️') == True:
                     return True
@@ -86,8 +84,7 @@ def analisarJogo(matriz, jogada):
                     return True
                 elif analiseDiagonal2(matriz, '⭕️') == True:
                     return True
-                else:
-                    return False
+
 
 rodada = 0
 
@@ -114,7 +111,7 @@ while True:
     if rodada >= 5:
         if analisarJogo(matriz, jogadaX) == True:
             break
-    if rodada == 9 and analisarJogo(matriz, jogadaX) == False:
+    if rodada == 9 and analisarJogo(matriz, jogadaX) != True:
         print('Empate!')
         break
 
